@@ -1,0 +1,7 @@
+/target
+Cargo.lock
+*.onnx
+*.pth
+*.bin
+*.safetensors
+.env

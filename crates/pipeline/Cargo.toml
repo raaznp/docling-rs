@@ -1,0 +1,22 @@
+[package]
+name = "docling-pipeline"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+docling-core = { path = "../core" }
+docling-backends = { path = "../backends" }
+docling-models = { path = "../models" }
+docling-utils = { path = "../utils" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+log = { workspace = true }
+rayon = { workspace = true }
+image = { workspace = true }
+
+[features]
+default = []
+vlm = ["docling-models/vlm"]

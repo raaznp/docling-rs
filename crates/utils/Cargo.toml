@@ -1,0 +1,17 @@
+[package]
+name = "docling-utils"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+docling-core = { path = "../core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+image = { workspace = true }
+rstar = { workspace = true }
+rayon = { workspace = true }
+chrono = { workspace = true }
+regex = { workspace = true }

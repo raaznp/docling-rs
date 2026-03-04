@@ -1,0 +1,47 @@
+[package]
+name = "docling-backends"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+docling-core = { path = "../core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+log = { workspace = true }
+bytes = { workspace = true }
+url = { workspace = true }
+regex = { workspace = true }
+
+# HTML
+scraper = { workspace = true }
+
+# Markdown
+pulldown-cmark = { workspace = true }
+
+# PDF (pure-Rust text extraction via lopdf)
+lopdf = { workspace = true }
+
+# Office formats (XLSX)
+calamine = { workspace = true, optional = true }
+
+# ZIP (PPTX, DOCX)
+zip = { workspace = true, optional = true }
+
+# XML
+quick-xml = { workspace = true }
+
+# CSV
+csv = { workspace = true }
+
+# Image
+image = { workspace = true }
+
+# Encoding detection
+encoding_rs = "0.8"
+
+[features]
+default = ["office"]
+office = ["dep:calamine", "dep:zip"]

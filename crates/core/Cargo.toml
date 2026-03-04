@@ -1,0 +1,19 @@
+[package]
+name = "docling-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+schemars = { workspace = true }
+thiserror = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+once_cell = { workspace = true }
+indexmap = { workspace = true }
+log = { workspace = true }
+url = { workspace = true }
+bytes = { workspace = true }
+regex = { workspace = true }
