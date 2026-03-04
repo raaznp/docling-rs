@@ -1,31 +1,32 @@
-[workspace]
-members = [
-    "crates/core",
-    "crates/backends",
-    "crates/models",
-    "crates/pipeline",
-    "crates/converter",
-    "crates/utils",
-    "crates/chunking",
-    "crates/cli",
-]
-resolver = "2"
-
-[workspace.package]
+[package]
+name = "docling"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-authors = ["Docling Rust Port Contributors"]
-repository = "https://github.com/docling-project/docling"
+description = "Rust port of Docling — universal document conversion for AI pipelines"
+repository = "https://github.com/raaznp/docling-rs"
 
-[workspace.dependencies]
+# ── Library crate ────────────────────────────────────────────
+[lib]
+path = "docling/lib.rs"
+
+# ── CLI binary ───────────────────────────────────────────────
+[[bin]]
+name = "docling"
+path = "docling/main.rs"
+
+# ── Features ─────────────────────────────────────────────────
+[features]
+default = ["office"]
+office = ["dep:calamine", "dep:zip"]
+asr = []                             # future: Whisper ONNX for audio/video transcription
+onnx = []                            # future: ort ONNX Runtime for layout/OCR/table models
+
+# ── Dependencies ─────────────────────────────────────────────
+[dependencies]
 # Serialization
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-schemars = { version = "0.8", features = ["derive"] }
-
-# Async
-tokio = { version = "1", features = ["full"] }
 
 # Error handling
 thiserror = "2"
@@ -34,76 +35,47 @@ anyhow = "1"
 # Logging
 log = "0.4"
 env_logger = "0.11"
-tracing = "0.1"
 
-# Utilities
-uuid = { version = "1", features = ["v4", "serde"] }
-chrono = { version = "0.4", features = ["serde"] }
-once_cell = "1"
-regex = "1"
-url = { version = "2", features = ["serde"] }
-bytes = "1"
-byteorder = "1"
-tempfile = "3"
+# Async / parallelism
 rayon = "1"
-indexmap = { version = "2", features = ["serde"] }
 
-# HTTP
-reqwest = { version = "0.12", features = [
-    "blocking",
-    "json",
-    "rustls-tls",
-], default-features = false }
+# CLI
+clap = { version = "4", features = ["derive"] }
 
-# Numeric / ML
-ndarray = "0.16"
+# UUID
+uuid = { version = "1", features = ["v4"] }
 
-# Image processing
-image = { version = "0.25", features = [
-    "png",
-    "jpeg",
-    "tiff",
-    "bmp",
-    "gif",
-    "webp",
-] }
+# Bytes / networking
+bytes = "1"
+url = "2"
+regex = "1"
 
-# XML / HTML
-quick-xml = { version = "0.37", features = ["serialize"] }
+# Home directory resolution (for model artifacts)
+dirs = "5"
+
+# ── Document format parsers ──────────────────────────────────
+# HTML
 scraper = "0.22"
 
 # Markdown
 pulldown-cmark = "0.12"
 
-# PDF parsing (text layer extraction)
+# PDF (pure-Rust text-layer extraction)
 lopdf = "0.34"
 
 # Office formats
-calamine = { version = "0.26", features = ["dates"] }
-zip = "2"
+calamine = { version = "0.26", features = ["dates"], optional = true }
+docx-rs = "0.4.18"
+zip = { version = "2", optional = true }
 
-# CLI
-clap = { version = "4", features = ["derive", "env"] }
-
-# Hashing
-md5 = "0.7"
-
-# Spatial indexing
-rstar = "0.12"
-
-# ONNX Runtime
-ort = { version = "2.0.0-rc.11", features = ["load-dynamic"] }
-
-# Home directory resolution
-dirs = "5"
+# XML
+quick-xml = "0.37"
 
 # CSV
 csv = "1"
 
-# Path utilities
-glob = "0.3"
+# Image
+image = "0.25"
 
-[profile.release]
-opt-level = 3
-lto = "thin"
-codegen-units = 1
+# Tokenizers (future VLM / text models)
+# tokenizers = { version = "0.21", optional = true }
